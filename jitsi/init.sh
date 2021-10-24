@@ -39,3 +39,4 @@ sed -i \
     "$(dirname "$0")/.env"
 
 docker-compose up -d
+cp $path/config.js $path/data/web/
