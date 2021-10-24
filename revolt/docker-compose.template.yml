@@ -1,0 +1,83 @@
+version: '3.8'
+services:
+  vortex:
+    image: revoltchat/vortex:0.3.0-alpha.1
+    restart: always
+    ports:
+      - "${IP}:8080:8080"
+      - "$RTC_MIN_PORT-$RTC_MAX_PORT:$RTC_MIN_PORT-$RTC_MAX_PORT/tcp"
+      - "$RTC_MIN_PORT-$RTC_MAX_PORT:$RTC_MIN_PORT-$RTC_MAX_PORT/udp"
+    env_file:
+      - .env
+
+  redis:
+    image: eqalpha/keydb
+    restart: always
+
+  api:
+    image: revoltchat/server
+    restart: always
+    ports:
+      - "${IP}:8000:8000"
+      - "${IP}:9000:9000"
+    depends_on:
+      - database
+      - redis
+    extra_hosts:
+      - "${ADDRESS}:${IP}"
+    env_file:
+      - .env
+
+  web:
+    image: revoltchat/client:master
+    restart: always
+    ports:
+      - "${IP}:5000:5000"
+    env_file:
+      - .env
+
+  database:
+    image: mongo:4.4
+    restart: always
+    volumes:
+      - ./data/db:/data/db
+    env_file:
+      - .env
+
+  minio:
+    image: minio/minio
+    restart: always
+    command: server /data
+    volumes:
+      - ./data/minio:/data
+    env_file:
+      - .env
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      while ! curl -s --output /dev/null --connect-timeout 1 http://minio:9000; do echo 'Waiting minio...' && sleep 0.1; done;
+      /usr/bin/mc alias set minio http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD;
+      /usr/bin/mc mb minio/attachments;
+      /usr/bin/mc mb minio/avatars;
+      /usr/bin/mc mb minio/backgrounds;
+      /usr/bin/mc mb minio/icons;
+      /usr/bin/mc mb minio/banners;
+      exit 0;
+      "
+    env_file:
+      - .env
+
+  autumn:
+    image: revoltchat/autumn
+    restart: always
+    depends_on:
+      - database
+      - createbuckets
+    ports:
+      - "${IP}:3000:3000"
+    env_file:
+      - .env

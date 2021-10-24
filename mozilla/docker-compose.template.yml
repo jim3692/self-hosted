@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+    syncserver:
+        image: mozilla/syncserver:latest
+        restart: always
+        volumes:
+            - ./data:/data
+        ports:
+          - "${IP}:5000:5000"
+        env_file:
+          - .env
+
+

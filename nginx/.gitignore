@@ -1,0 +1,5 @@
+configs/domains/*
+!configs/domains/http.conf
+
+configs/cert/*
+!configs/cert/letsencrypt
