@@ -4,3 +4,5 @@
 */nginx.conf
 */data
 ip
+
+!nginx/docker-compose.yml
