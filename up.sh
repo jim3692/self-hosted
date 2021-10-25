@@ -15,3 +15,4 @@ do
 done
 
 bash -c "cd $root/nginx ; docker-compose up -d"
+bash $root/reload.sh
