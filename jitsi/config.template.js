@@ -871,7 +871,7 @@ config.focusUserJid = 'focus@auth.meet.jitsi';
 
 config.hosts.muc = 'muc.meet.jitsi';
 config.bosh = '/http-bind';
-config.websocket = 'wss://jitsi.mpro.gay/xmpp-websocket';
+config.websocket = 'wss://${ADDRESS}/xmpp-websocket';
 // Video configuration.
 //
 

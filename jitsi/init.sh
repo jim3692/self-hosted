@@ -39,4 +39,6 @@ sed -i \
     "$(dirname "$0")/.env"
 
 docker-compose up -d
+
+__replace config.template.js > config.js
 cp $path/config.js $path/data/web/
