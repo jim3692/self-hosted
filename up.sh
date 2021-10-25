@@ -4,7 +4,7 @@ export root="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 source $root/scripts/lib.sh
 
 export SERVICE_DOMAIN=alfonso.top
-export SERVICE_REGISTRAR=letsenecrypt
+export SERVICE_REGISTRAR=letsencrypt
 
 bash $root/scripts/create-bridges.sh
 
