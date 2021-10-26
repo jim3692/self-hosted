@@ -1,0 +1,49 @@
+services:
+    pipedfrontend:
+        image: 1337kavin/piped-frontend:latest
+        restart: unless-stopped
+        depends_on:
+            - piped
+        entrypoint: ash -c 'sed -i s/pipedapi.kavin.rocks/${ADDRESS}\\/api/g /usr/share/nginx/html/js/* && /docker-entrypoint.sh && nginx -g "daemon off;"'
+    ytproxy:
+        image: 1337kavin/ytproxy:latest
+        restart: unless-stopped
+        volumes:
+            - ytproxy:/app/socket
+    piped:
+        image: 1337kavin/piped:latest
+        restart: unless-stopped
+        volumes:
+            - ./configs/config.properties:/app/config.properties:ro
+        depends_on:
+            - postgres
+    caddy:
+        image: caddy:2-alpine
+        restart: unless-stopped
+        ports:
+            - "${IP}:8000:80"
+        volumes:
+            - ./configs/Caddyfile:/etc/caddy/Caddyfile:ro
+            - caddy_data:/data
+            - ytproxy:/var/run/ytproxy
+    postgres:
+        image: postgres:13-alpine
+        restart: unless-stopped
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=piped
+            - POSTGRES_USER=piped
+            - POSTGRES_PASSWORD=changeme
+    # fronted-proxy:
+    #     image: piped-html-proxy
+    #     restart: unless-stopped
+    #     ports:
+    #         - "8001:3000"
+    #     environment:
+    #         - PORT=3000
+    #         - API_HOST=https://${ADDRESS}/api
+    #         - FRONTEND_HOST=https://${ADDRESS}
+volumes:
+    caddy_data:
+    ytproxy:

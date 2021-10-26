@@ -2,3 +2,4 @@ whoogle
 mozilla
 jitsi
 revolt
+piped
