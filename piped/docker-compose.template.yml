@@ -4,7 +4,7 @@ services:
         restart: unless-stopped
         depends_on:
             - piped
-        entrypoint: ash -c 'sed -i s/pipedapi.kavin.rocks/${ADDRESS}\/api/g /usr/share/nginx/html/js/* && /docker-entrypoint.sh && nginx -g "daemon off;"'
+        entrypoint: ash -c 'sed -i s/pipedapi.kavin.rocks/${ADDRESS}\\/api/g /usr/share/nginx/html/js/* && /docker-entrypoint.sh && nginx -g "daemon off;"'
     ytproxy:
         image: 1337kavin/ytproxy:latest
         restart: unless-stopped
