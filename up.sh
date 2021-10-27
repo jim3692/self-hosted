@@ -1,10 +1,14 @@
 #!/bin/bash
 
 export PROJECT_ROOT="$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )"
-source $PROJECT_ROOT/scripts/lib.sh
 
-export SERVICE_DOMAIN=alfonso.top
-export SERVICE_REGISTRAR=letsencrypt
+if [ ! -f $PROJECT_ROOT/.env ]; then
+    echo .env file not found >> /dev/stderr
+    exit 1
+fi
+
+source $PROJECT_ROOT/.env
+source $PROJECT_ROOT/scripts/lib.sh
 
 bash $PROJECT_ROOT/scripts/create-bridges.sh
 
