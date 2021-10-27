@@ -1,6 +1,6 @@
 #!/bin/bash
 
-root="$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )"
+export PROJECT_ROOT="$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )"
 cd $PROJECT_ROOT/../sites-enabled
 
 for service in $(ls -w 1)
