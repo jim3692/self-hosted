@@ -1,0 +1,5 @@
+*/.env
+*/keys.env
+*/docker-compose.yml
+*/nginx.conf
+*/data
