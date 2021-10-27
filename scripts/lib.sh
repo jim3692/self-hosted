@@ -1,7 +1,11 @@
 #!/bin/bash
 
 PUBLIC_IP=$(curl -sS ifconfig.me)
-path="$root/$SERVICE_NAME"
+path="$root/sites-enabled/$SERVICE_NAME"
+
+function __get_service_path () {
+    echo $root/sites-enabled/$0
+}
 
 function __replace () {
     sed \
@@ -13,8 +17,8 @@ function __replace () {
 }
 
 function __generate_service () {
-    __replace template.env > .env
-    __replace docker-compose.template.yml > docker-compose.yml
+    [ -f template.env ] __replace template.env > .env
+    [ -f docker-compose.template.yml ] __replace docker-compose.template.yml > docker-compose.yml
     __replace nginx.template.conf > nginx.conf
 }
 
@@ -26,4 +30,4 @@ function __copy_nginx () {
     cp $path/nginx.conf $root/nginx/configs/domains/$SERVICE_NAME.conf
 }
 
-export services=$(cat $root/services.txt)
+export services=$(ls -w 1 $root/sites-enabled)
