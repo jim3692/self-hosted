@@ -1,10 +1,12 @@
 #!/bin/bash
 
-PUBLIC_IP=$(curl -sS ifconfig.me)
-path="$root/sites-enabled/$SERVICE_NAME"
+[ -z ${LIB_PUBLIC_IP+x} ] || export LIB_PUBLIC_IP=$(curl -sS ifconfig.me)
+[ -z ${LIB_SERVICES+x} ] || export LIB_SERVICES=$(ls -w 1 $PROJECT_ROOT/sites-enabled)
+
+LIB_SERVICE_PATH="$PROJECT_ROOT/sites-enabled/$SERVICE_NAME"
 
 function __get_service_path () {
-    echo $root/sites-enabled/$0
+    echo $PROJECT_ROOT/sites-enabled/$0
 }
 
 function __replace () {
@@ -27,7 +29,5 @@ function __random_token () {
 }
 
 function __copy_nginx () {
-    cp $path/nginx.conf $root/nginx/configs/domains/$SERVICE_NAME.conf
+    cp $LIB_SERVICE_PATH/nginx.conf $PROJECT_ROOT/nginx/configs/domains/$SERVICE_NAME.conf
 }
-
-export services=$(ls -w 1 $root/sites-enabled)

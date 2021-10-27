@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $root/scripts/lib.sh
+source $PROJECT_ROOT/scripts/lib.sh
 __generate_service
 
 __copy_nginx

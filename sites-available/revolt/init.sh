@@ -1,20 +1,20 @@
 #!/bin/bash
 
-source $root/scripts/lib.sh
+source $PROJECT_ROOT/scripts/lib.sh
 __generate_service
 
 __copy_nginx
 
-if [ -f "$path/keys.env" ]; then
-    source $path/keys.env
+if [ -f "$LIB_SERVICE_PATH/keys.env" ]; then
+    source $LIB_SERVICE_PATH/keys.env
     VAPID_PRIVATE=$(echo $VAPID_PRIVATE_B64 | base64 --decode)
 else
     VORTEX_TOKEN=$(__random_token)
-    echo VORTEX_TOKEN=$VORTEX_TOKEN >> $path/keys.env
+    echo VORTEX_TOKEN=$VORTEX_TOKEN >> $LIB_SERVICE_PATH/keys.env
 
     VAPID_PRIVATE=$(openssl ecparam -name prime256v1 -genkey)
     VAPID_PRIVATE_B64=$(echo $"$VAPID_PRIVATE" | base64 | tr -d '\n')
-    echo VAPID_PRIVATE_B64=$VAPID_PRIVATE_B64 >> $path/keys.env
+    echo VAPID_PRIVATE_B64=$VAPID_PRIVATE_B64 >> $LIB_SERVICE_PATH/keys.env
 fi
 
 vapidPrivateB64=$(echo $"$VAPID_PRIVATE" | base64 | tr -d '\n')
