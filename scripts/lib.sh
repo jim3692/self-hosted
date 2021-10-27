@@ -1,5 +1,10 @@
 #!/bin/bash
 
+export $SERVER_DOMAIN
+export $SERVER_REGISTRAR
+export $SERVER_SUBNET
+export $SERVER_BRIDGE_PREFIX
+
 [ -z ${LIB_PUBLIC_IP+x} ] || export LIB_PUBLIC_IP=$(curl -sS ifconfig.me)
 [ -z ${LIB_SERVICES+x} ] || export LIB_SERVICES=$(ls -w 1 $PROJECT_ROOT/sites-enabled)
 

@@ -2,10 +2,9 @@
 
 source $PROJECT_ROOT/scripts/lib.sh
 
-subnet=10.0.0.0
 serviceCount=$(echo "$LIB_SERVICES" | wc -l)
 
-host=$(echo $subnet | egrep -o '[0-9]+$')
+host=$(echo $SERVER_SUBNET | egrep -o '[0-9]+$')
 
 rm -rf $PROJECT_ROOT/ip
 mkdir $PROJECT_ROOT/ip
@@ -15,8 +14,8 @@ i=1
 for service in $LIB_SERVICES
 do
     newHost=$(expr $host + $i)
-    ip=$(echo $subnet | sed -E "s/[0-9]+$/$newHost/")
-    brName="service-${service}"
+    ip=$(echo $SERVER_SUBNET | sed -E "s/[0-9]+$/$newHost/")
+    brName="${SERVER_BRIDGE_PREFIX}${service}"
 
     echo $ip > $PROJECT_ROOT/ip/$service
 
