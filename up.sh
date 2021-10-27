@@ -15,7 +15,7 @@ bash $PROJECT_ROOT/scripts/create-bridges.sh
 for service in $LIB_SERVICES
 do
     ip=$(cat $PROJECT_ROOT/ip/$service)
-    bash -c "cd $PROJECT_ROOT/$service ; echo $service ; export SERVICE_IP=$ip ; export SERVICE_NAME=$service SERVICE_ADDRESS=$service.$SERVICE_DOMAIN ; bash init.sh"
+    bash -c "cd $(__get_service_path $service) ; echo $service ; export SERVICE_IP=$ip ; export SERVICE_NAME=$service SERVICE_ADDRESS=$service.$SERVICE_DOMAIN ; bash init.sh"
 done
 
 bash -c "cd $PROJECT_ROOT/nginx ; docker-compose up -d"
