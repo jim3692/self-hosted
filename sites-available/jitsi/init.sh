@@ -2,32 +2,32 @@
 
 # Forward 4443/tcp, 10000/udp
 
-source $root/scripts/lib.sh
-__generate_service
+source $PROJECT_ROOT/scripts/lib.sh
 
+__generate_service
 __copy_nginx
 
 function generatePassword() {
     openssl rand -hex 16
 }
 
-if [ -f "$path/keys.env" ]; then
-    source $path/keys.env
+if [ -f "$LIB_SERVICE_PATH/keys.env" ]; then
+    source $LIB_SERVICE_PATH/keys.env
 else
     JICOFO_AUTH_PASSWORD=$(generatePassword)
-    echo JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD} >> $path/keys.env
+    echo JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD} >> $LIB_SERVICE_PATH/keys.env
 
     JVB_AUTH_PASSWORD=$(generatePassword)
-    echo JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD} >> $path/keys.env
+    echo JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD} >> $LIB_SERVICE_PATH/keys.env
 
     JIGASI_XMPP_PASSWORD=$(generatePassword)
-    echo JIGASI_XMPP_PASSWORD=${JIGASI_XMPP_PASSWORD} >> $path/keys.env
+    echo JIGASI_XMPP_PASSWORD=${JIGASI_XMPP_PASSWORD} >> $LIB_SERVICE_PATH/keys.env
 
     JIBRI_RECORDER_PASSWORD=$(generatePassword)
-    echo JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD} >> $path/keys.env
+    echo JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD} >> $LIB_SERVICE_PATH/keys.env
 
     JIBRI_XMPP_PASSWORD=$(generatePassword)
-    echo JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD} >> $path/keys.env
+    echo JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD} >> $LIB_SERVICE_PATH/keys.env
 fi
 
 sed -i \
@@ -41,4 +41,4 @@ sed -i \
 docker-compose up -d
 
 __replace config.template.js > config.js
-cp $path/config.js $path/data/web/
+cp $LIB_SERVICE_PATH/config.js $LIB_SERVICE_PATH/data/web/

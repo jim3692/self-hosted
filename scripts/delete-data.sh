@@ -1,9 +1,9 @@
 #!/bin/bash
 
-root="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-cd $root/..
+root="$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )"
+cd $PROJECT_ROOT/../sites-enabled
 
-for service in $(cat services.txt)
+for service in $(ls -w 1)
 do
     rm -rf $service/data
 done

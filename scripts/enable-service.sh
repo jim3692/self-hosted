@@ -6,5 +6,4 @@ if [ ! -f init.sh || ! -f nginx.template.conf ]; then
 fi
 
 service=${PWD##*/}
-
 ln -s ../sites-available/$service ../../sites-enabled/

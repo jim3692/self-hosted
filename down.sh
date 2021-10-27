@@ -1,14 +1,14 @@
 #!/bin/bash
 
-export root="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-source $root/scripts/lib.sh
+export PROJECT_ROOT="$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )"
+source $PROJECT_ROOT/scripts/lib.sh
 
-for service in $services
+for service in $LIB_SERVICES
 do
-    ip=$(bash -c "cd $root ; cat ip/$service")
-    bash -c "cd $root ; cd $service ; echo $service ; docker-compose down"
+    ip=$(bash -c "cd $PROJECT_ROOT ; cat ip/$service")
+    bash -c "cd $PROJECT_ROOT ; cd $service ; echo $service ; docker-compose down"
 done
 
-bash -c "cd $root/nginx ; docker-compose down"
+bash -c "cd $PROJECT_ROOT/nginx ; docker-compose down"
 
-bash $root/scripts/drop-bridges.sh
+bash $PROJECT_ROOT/scripts/drop-bridges.sh
