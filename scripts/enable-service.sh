@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f init.sh || ! -f nginx.template.conf ]; then
+if [ ! -f init.sh ] || [ ! -f nginx.template.conf ]; then
     echo Invalid service >> /dev/stderr
     exit 1
 fi
