@@ -34,7 +34,7 @@ This is a template of some services I run on my VPS and it currently contains:
 
 ## Challenges
 
-1. Its application uses its own docker-compose and there is a need for a way to organize them and run them behind the same reverse proxy.
+1. Each application uses its own docker-compose and there is a need for a way to organize them and run them behind the same reverse proxy.
 
 2. Cross-stack communication is a pain and the best option is to publish the required ports, which requires additional firewall configuration.
 
