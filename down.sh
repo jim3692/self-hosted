@@ -8,8 +8,7 @@ do
     echo $service 
     ip=$(cat "$PROJECT_ROOT/ip/$service")
     bash -c "
-        cd $PROJECT_ROOT
-        cd $service
+        cd $PROJECT_ROOT/sites-enabled/$service
         docker-compose down
     "
 done
