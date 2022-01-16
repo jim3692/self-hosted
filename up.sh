@@ -7,16 +7,25 @@ if [ ! -f $PROJECT_ROOT/.env ]; then
     exit 1
 fi
 
-source $PROJECT_ROOT/.env
 source $PROJECT_ROOT/scripts/lib.sh
 
 bash $PROJECT_ROOT/scripts/create-bridges.sh
 
 for service in $LIB_SERVICES
 do
+    echo $service
     ip=$(cat $PROJECT_ROOT/ip/$service)
-    bash -c "cd $(__get_service_path $service) ; echo $service ; export SERVICE_IP=$ip ; export SERVICE_NAME=$service SERVICE_ADDRESS=$service.$SERVICE_DOMAIN ; bash init.sh"
+    bash -c "
+        cd $(__get_service_path $service)
+        export SERVICE_IP=$ip
+        export SERVICE_NAME=$service
+        export SERVICE_ADDRESS=$service.$SERVER_DOMAIN
+        bash init.sh
+    "
 done
 
-bash -c "cd $PROJECT_ROOT/nginx ; docker-compose up -d"
+bash -c "
+    cd $PROJECT_ROOT/nginx
+    docker-compose up -d
+"
 bash $PROJECT_ROOT/reload.sh

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source $PROJECT_ROOT/.env
 export SERVER_DOMAIN=$SERVER_DOMAIN
 export SERVER_REGISTRAR=$SERVER_REGISTRAR
 export SERVER_SUBNET=$SERVER_SUBNET
@@ -18,7 +19,7 @@ function __replace () {
     sed \
         -e "s/\${IP}/${SERVICE_IP}/g" \
         -e "s/\${ADDRESS}/${SERVICE_ADDRESS}/g" \
-        -e "s/\${DOMAIN}/${SERVICE_DOMAIN}/g" \
+        -e "s/\${DOMAIN}/${SERVER_DOMAIN}/g" \
         -e "s/\${REGISTRAR}/${SERVICE_REGISTRAR}/g" \
         $@
 }
