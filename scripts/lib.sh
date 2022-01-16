@@ -20,7 +20,7 @@ function __replace () {
         -e "s/\${IP}/${SERVICE_IP}/g" \
         -e "s/\${ADDRESS}/${SERVICE_ADDRESS}/g" \
         -e "s/\${DOMAIN}/${SERVER_DOMAIN}/g" \
-        -e "s/\${REGISTRAR}/${SERVICE_REGISTRAR}/g" \
+        -e "s/\${REGISTRAR}/${SERVER_REGISTRAR}/g" \
         $@
 }
 
