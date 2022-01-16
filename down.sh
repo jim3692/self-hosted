@@ -5,10 +5,18 @@ source $PROJECT_ROOT/scripts/lib.sh
 
 for service in $LIB_SERVICES
 do
-    ip=$(bash -c "cd $PROJECT_ROOT ; cat ip/$service")
-    bash -c "cd $PROJECT_ROOT ; cd $service ; echo $service ; docker-compose down"
+    echo $service 
+    ip=$(cat "$PROJECT_ROOT/ip/$service")
+    bash -c "
+        cd $PROJECT_ROOT
+        cd $service
+        docker-compose down
+    "
 done
 
-bash -c "cd $PROJECT_ROOT/nginx ; docker-compose down"
+bash -c "
+    cd $PROJECT_ROOT/nginx
+    docker-compose down
+"
 
 bash $PROJECT_ROOT/scripts/drop-bridges.sh
